@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S&B Agency – TikTok Live Management</title>
+  <style>
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 28px;
+  background: rgba(2,6,23,.9);
+  border-bottom: 1px solid rgba(148,163,184,.12);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-left img {
+  height: 36px;
+}
+
+.logo-text {
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.burger {
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.menu {
+  display: none;
+  position: fixed;
+  top: 72px;
+  right: 20px;
+  background: #0b1220;
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 16px;
+  padding: 16px;
+  z-index: 9999;
+  min-width: 220px;
+}
+
+.menu a {
+  display: block;
+  padding: 10px 8px;
+  color: #e5e7eb;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.menu a:hover {
+  background: rgba(212,175,55,.15);
+  color: #f5d76e;
+}
+
+    :root {
+      --bg: #020617;
+      --surface: #0b1220;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #d4af37;
+      --accent2: #f5d76e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1000px 500px at 10% -10%, #3b0764, transparent),
+                  radial-gradient(800px 400px at 90% 10%, #064e3b, transparent),
+                  var(--bg);
+      color: var(--text);
+    }
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 28px;
+      background: rgba(2,6,23,.7);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(148,163,184,.12);
+    }
+
+    nav a { color: var(--text); text-decoration: none; margin-left: 18px; font-weight: 500; }
+    .logo { font-weight: 800; letter-spacing: .5px; }
+
+    header {
+      max-width: 1100px; margin: 0 auto;
+      padding: 96px 24px 72px; text-align: center;
+    }
+    header h1 { font-size: clamp(36px, 6vw, 64px); margin-bottom: 16px; }
+    header p { color: var(--muted); max-width: 760px; margin: 0 auto 36px; font-size: 18px; }
+
+    .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 14px 22px; border-radius: 14px; font-weight: 600; text-decoration: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #020617;
+    }
+    .btn.secondary { background: transparent; color: var(--text); border: 1px solid rgba(148,163,184,.35); }
+
+    main {
+      max-width: 1100px; margin: 0 auto 80px; padding: 24px;
+      display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(11,18,32,.95), rgba(11,18,32,.75));
+      border: 1px solid rgba(148,163,184,.12);
+      border-radius: 18px; padding: 26px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.35);
+    }
+    .card h3 { margin-top: 0; }
+    .card p { color: var(--muted); }
+
+    section.full {
+      max-width: 900px; margin: 0 auto 80px; padding: 0 24px; text-align: center;
+    }
+
+    footer {
+      border-top: 1px solid rgba(148,163,184,.12);
+      padding: 32px 24px; text-align: center; color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; margin: 0 10px; }
+
+#zeiten {
+  scroll-margin-top: 120px;
+}
+/* Bewerbungsbereich */
+.bewerbung-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 80px 0;
+}
+
+.bewerbung-inner {
+  max-width: 900px;
+  width: 100%;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Text links */
+.bewerbung-text {
+  flex: 1;
+}
+
+/* Bild rechts */
+.bewerbung-bild img {
+  width: 220px;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.bewerbung-bild img:hover {
+  transform: scale(1.05);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .bewerbung-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+/* TikTok Live Studio Boxen */
+.studio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.studio-box {
+  background: linear-gradient(180deg, rgba(11,18,32,.95), rgba(11,18,32,.8));
+  border: 1px solid rgba(212,175,55,.35);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 15px 35px rgba(0,0,0,.35);
+}
+
+.studio-box h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #f5d76e;
+}
+
+.studio-box p {
+  color: #94a3b8;
+  font-size: 15px;
+  margin: 0;
+}
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="logo.png" alt="S&B Agency Logo">
+    <span class="logo-text">S&B AGENCY</span>
+  </div>
+
+  <div class="burger" onclick="toggleMenu()">☰</div>
+</nav>
+
+<div id="menu" class="menu">
+  <a href="#start" onclick="toggleMenu()">Startseite</a>
+  <a href="#about" onclick="toggleMenu()">Über uns</a>
+  <a href="#ceos" onclick="toggleMenu()">CEOs</a>
+  <a href="merch.html">Merch Shop</a>
+  <a href="https://www.tiktok.com/@spagency1" target="_blank" onclick="toggleMenu()">TikTok</a>
+ <a href="https://www.instagram.com/sbagency_live_agentur/" target="_blank" onclick="toggleMenu()">Instagram</a>
+  <a href="mailto:agencys.p18@gmail.com">E-Mail</a>
+  <a href="javascript:void(0)" onclick="scrollToZeiten()">Geschäftszeiten</a>
+  <a href="javascript:void(0)" onclick="openImpressum()">Impressum</a>
+  <a href="javascript:void(0)" onclick="openDatenschutz()">Datenschutz</a>
+</div>
+
+</nav>
+
+  <header>
+<h1 style="
+  background: linear-gradient(135deg, #d4af37, #f5d76e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+">
+  𝑺&𝑩 𝑨𝒈𝒆𝒏𝒄𝒚
+</h1>
+
+    <p>
+      S&B Agency ist eine moderne TikTok-Agentur.
+      Wir helfen Live-Streamerinnen und Streamern, besser zu werden, mehr Reichweite aufzubauen
+      und langfristig zu wachsen.
+       </div>
+  </header>
+ <section id="about">
+  <section class="full" id="ueberuns">
+    <h2 style="color:#f5d76e;">𝑼̈𝒃𝒆𝒓 𝒖𝒏𝒔</h2>
+    <p>
+      <strong>Professionelles Social Media Management für Deinen Erfolg – und das völlig kostenlos.</strong>
+    </p>
+    <p>
+      Unser umfassendes Fachwissen im Bereich Social Media Management ermöglicht es uns,
+      maßgeschneiderte Strategien zu entwickeln, die Deine Präsenz maximieren.
+      Wir verstehen die sich ständig verändernde Social-Media-Landschaft und bringen die nötige Erfahrung mit.
+    </p>
+    <p>
+      Was uns einzigartig macht, ist unsere individuelle Herangehensweise an jeden Streamer.
+      Wir legen großen Wert auf persönliche Betreuung und passen unsere Unterstützung gezielt an Deine Ziele an.
+      Durch kontinuierliche Analyse und Optimierung sorgen wir dafür, dass Deine Lives herausragen
+      und langfristig erfolgreich sind.
+    </p>
+
+ <div class="cta">
+      <a class="btn" href="https://wa.me/4368120245992" target="_blank">WhatsApp schreiben</a>
+  
+    </div>
+
+    <h2 style="color:#f5d76e;">𝑶𝒑𝒕𝒊𝒎𝒊𝒆𝒓𝒆 𝑫𝒆𝒊𝒏𝒆𝒏 𝑺𝒐𝒄𝒊𝒂𝒍-𝑴𝒆𝒅𝒊𝒂-𝑬𝒓𝒇𝒐𝒍𝒈 𝒎𝒊𝒕 𝑺&𝑩 𝑨𝒈𝒆𝒏𝒄𝒚</h2>
+  </section>
+
+  <main>
+    <div class="card">
+      <h3>Full‑Service‑Management</h3>
+      <p>Kostenloses Komplettpaket für TikTok‑Livestreaming – von Setup bis Skalierung.</p>
+    </div>
+    <div class="card">
+      <h3>Creator‑Coaching</h3>
+      <p>Individuelle Roadmaps, Content‑Formate, Hooks & Monetarisierungs‑Strategien.</p>
+    </div>
+    <div class="card">
+      <h3>Analytics & Wachstum</h3>
+      <p>Datengetriebene Optimierung für Watchtime, Retention, Gifts & Follower‑Growth.</p>
+    </div>
+  </main>
+
+  <section class="full" id="services">
+   <h1 style="color:#f5d76e;">𝑾𝒂𝒔 𝒘𝒊𝒓 𝒇𝒖̈𝒓 𝑫𝒊𝒄𝒉 𝒖̈𝒃𝒆𝒓𝒏𝒆𝒉𝒎𝒆𝒏</h1>
+   <h4 style="color:#f5d76e;">Full‑Service‑Management für TikTok‑Livestreaming – und das als Komplettpaket völlig kostenlos</h4> 
+
+    <p><strong>Setup & Szenenbau</strong><br />
+      Komplette Einrichtung von TikTok Live Studio – Szenen, Quellen, Alerts, Audio, Overlays.
+    </p>
+
+    <p><strong>Creator‑Coaching</strong><br />
+      Individuelle Roadmaps, Content‑Formate, Hooks & Monetarisierungs‑Strategien.
+    </p>
+
+    <p><strong>Analytics & Wachstum</strong><br />
+      Datengetriebene Optimierung für Watchtime, Retention, Gifts & Follower‑Growth.
+    </p>
+
+    <p><strong>Compliance & Sicherheit</strong><br />
+      Richtlinien‑Check, Rechteklärung, Jugendschutz & Brand‑Safe‑Workflows.
+    </p>
+
+    <p><strong>On‑Air Betreuung</strong><br />
+      Live‑Begleitung, Moderation, Troubleshooting & Performance‑Hints in Echtzeit.
+    </p>
+
+    <p><strong>Brand‑Deals & Scaling</strong><br />
+      Matching mit Partnern, Pitch‑Decks, Kampagnendurchführung und Reporting.
+    </p>
+  </section>
+<section class="bewerbung-wrapper">
+  <div class="bewerbung-inner">
+
+    <!-- TEXT LINKS -->
+    <div class="bewerbung-text">
+      <h1 style="color:#f5d76e;">𝑾𝒆𝒓𝒅𝒆 𝑻𝒆𝒊𝒍 𝒅𝒆𝒓 𝑺&𝑩 𝑨𝒈𝒆𝒏𝒄𝒚</h1>
+      <p>
+        Creator? Sänger:in? Gamer? Talk-Host?<br><br>
+        Bewirb dich jetzt als Talent.<br>
+        Klick auf das Bild, um dich zu bewerben.
+      </p>
+    </div>
+
+    <!-- BILD RECHTS (KLICKBAR) -->
+    <a class="bewerbung-bild"
+       href="https://www.tiktok.com/tcn/scout_creators?use_spark=1&agency_scout_source=qr_code_leads&ShareLinkID=7467067326828727046"
+       target="_blank">
+      <img src="agentur-tiktok.jpg" alt="Jetzt bei S&B Agency bewerben">
+    </a>
+
+  </div>
+</section>
+
+<section class="full" id="studio">
+  <h2 style="color:#f5d76e;">𝑺𝒑𝒆𝒛𝒊𝒂𝒍𝒊𝒔𝒊𝒆𝒓𝒕 𝒂𝒖𝒇 𝑻𝒊𝒌𝑻𝒐𝒌 𝑳𝒊𝒗𝒆 𝑺𝒕𝒖𝒅𝒊𝒐</h2>
+  <p>
+    Wir kennen jede Einstellung, jeden Workaround und die besten Setup-Pfade.
+    So holst Du das Maximum aus Deinem Stream – stabil, hochwertig und interaktiv.
+  </p>
+
+  <div class="studio-grid">
+
+    <div class="studio-box">
+      <h4>Bitrate & Encoder</h4>
+      <p>Optimale Bitrate, Encoder-Settings & sauberes Szenen-Snapping.</p>
+    </div>
+
+    <div class="studio-box">
+      <h4>Audio-Routing</h4>
+      <p>Voicemeter / Loopback, saubere Pegel & professioneller Sound.</p>
+    </div>
+
+    <div class="studio-box">
+      <h4>Source-Presets</h4>
+      <p>Gameplay, Cam, Gäste & Screen-Share perfekt vorbereitet.</p>
+    </div>
+
+    <div class="studio-box">
+      <h4>Alerts & Interaktion</h4>
+      <p>Alert-Designs, Goal-Widgets & Zuschauer-Interaktionen.</p>
+    </div>
+
+    <div class="studio-box">
+      <h4>Automation</h4>
+      <p>Live-Studio-Presets, Scene-Switcher, Hotkeys & Makros.</p>
+    </div>
+
+  </div>
+</section>
+  
+  <section id="ceos" class="CEOs">
+  <section class="full" id="team">
+  <h1 style="color:#f5d76e;">𝑪𝑬𝑶𝒔</h1>
+  <div style="display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-bottom:50px;">
+
+  <div style="text-align:center;">
+    <img src="sofia47en.jpg" style="width:180px;height:180px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@sofia47en" target="_blank">@sofia47en</a>
+  </div>
+
+<div style="text-align:center;">
+    <img src="bombenleger1873.jpg" style="width:180px;height:180px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@bombenleger1873" target="_blank">@bombenleger1873</a>
+  </div>
+
+
+ <section id="Sekretärin" class="Sekretärin">
+  <section class="full" id="team">
+  <h1 style="color:#f5d76e;">𝑺𝒆𝒌𝒓𝒆𝒕𝒂̈𝒓𝒊𝒏</h1>
+  <div style="display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-bottom:50px;">
+
+<div style="text-align:center;">
+    <img src="jenniferneth.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@jenniferneth" target="_blank">@jenniferneth</a>
+  </div>
+
+  </div>
+
+ <h1 style="color:#f5d76e;">𝑳𝒊𝒗𝒆 𝑴𝒂𝒏𝒂𝒈𝒆𝒓</h1>
+<div style="display:flex;gap:30px;justify-content:center;flex-wrap:wrap;">
+
+ <div style="text-align:center;">
+    <img src="pfoetchenclub_wg.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@pfoetchenclub_wg" target="_blank">@pfoetchenclub_wg</a>
+  </div>
+
+  <div style="text-align:center;">
+    <img src="mika8497thedarknight.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@mika8497thedarknight" target="_blank">@mika8497thedarknight</a>
+  </div>
+
+  <div style="text-align:center;">
+    <img src="casshern1.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@casshern1" target="_blank">@casshern1</a>
+  </div>
+
+  <div style="text-align:center;">
+    <img src="its_official_patrick.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@its_official_patrick" target="_blank">@its_official_patrick</a>
+  </div>
+
+   <div style="text-align:center;">
+    <img src="moxxi89.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@moxxi89" target="_blank">@moxxi89</a>
+  </div>
+
+ <div style="text-align:center;">
+    <img src="x.minion.x3.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@x.minion.x3" target="_blank">@x.minion.x3</a>
+  </div>
+
+ <div style="text-align:center;">
+    <img src="selina_29123.jpg" style="width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 8px;">
+    <a href="https://www.tiktok.com/@selina_29123" target="_blank">@selina_29123</a>
+  </div>
+
+  </div>
+</section>
+
+<section id="zeiten">
+   <section class="full" id="geschaeftszeiten">
+    <h2 style="color:#f5d76e;">𝑮𝒆𝒔𝒄𝒉𝒂̈𝒇𝒕𝒔𝒛𝒆𝒊𝒕𝒆𝒏</h2>
+    <p>
+      Montag – Samstag: <strong>08:00 – 23:00</strong><br />
+      Sonntag: <strong>Geschlossen</strong>
+    </p>
+  </section>
+
+  <section class="full" id="kontakt">
+    <p>
+      🔗 Instagram: <a href="https://www.instagram.com/sbagency_live_agentur/" target="_blank">@sbagency_live_agentur</a><br />
+    </p>
+    <h2 style="color:#f5d76e;">𝑲𝒐𝒏𝒕𝒂𝒌𝒕</h2>    
+      <p>
+      📧 E-Mail: agencys.p18@gmail.com<br />
+      📱 WhatsApp: +43 681 20245992<br /><br />
+      👉 <strong>Kontakt bitte ausschließlich über WhatsApp</strong>
+    </p>
+  </section>
+
+  <footer>
+  © <span id="year"></span> S&B Agency ·
+  <a href="javascript:void(0)" onclick="openImpressum()">Impressum</a> ·
+  <a href="javascript:void(0)" onclick="openDatenschutz()">Datenschutz</a>
+</footer>
+<script>
+  function openImpressum() {
+    document.getElementById('impressumPopup').style.display = 'block';
+  }
+  function closeImpressum() {
+    document.getElementById('impressumPopup').style.display = 'none';
+  }
+</script>
+
+<!-- Datenschutz Popup -->
+<div id="datenschutzPopup" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:9999;">
+  <div style="max-width:600px; margin:10% auto; background:#0b1220; padding:24px; border-radius:16px; position:relative;">
+    
+    <button onclick="closeDatenschutz()"
+      style="position:absolute; top:12px; right:12px; background:none; border:none; color:#e5e7eb; font-size:20px; cursor:pointer;">
+      ✕
+    </button>
+
+    <h2>Datenschutzerklärung</h2>
+
+    <p style="font-size:14px; color:#94a3b8;">
+      Der Schutz Ihrer persönlichen Daten ist uns wichtig.
+      Wir verarbeiten personenbezogene Daten ausschließlich gemäß DSGVO.
+    </p>
+
+    <p style="font-size:14px; color:#94a3b8;">
+      Bei Kontaktaufnahme per E-Mail oder WhatsApp werden Ihre Angaben nur zur
+      Bearbeitung Ihrer Anfrage verwendet und nicht weitergegeben.
+    </p>
+
+    <p style="font-size:14px; color:#94a3b8;">
+      Sie haben jederzeit das Recht auf Auskunft, Berichtigung oder Löschung Ihrer Daten.
+    </p>
+
+    <p style="font-size:14px;">
+      Kontakt: <a href="mailto:agencys.p18@gmail.com">agencys.p18@gmail.com</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  function openDatenschutz() {
+    document.getElementById('datenschutzPopup').style.display = 'block';
+  }
+  function closeDatenschutz() {
+    document.getElementById('datenschutzPopup').style.display = 'none';
+  }
+</script>
+
+<!-- Impressum Popup -->
+<div id="impressumPopup"
+     style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:9999;">
+  
+  <div style="max-width:600px; margin:10% auto; background:#0b1220;
+              padding:24px; border-radius:16px; position:relative;">
+
+    <button onclick="closeImpressum()"
+      style="position:absolute; top:12px; right:12px; background:none;
+             border:none; color:#e5e7eb; font-size:20px; cursor:pointer;">
+      ✕
+    </button>
+
+    <h2>Impressum</h2>
+
+    <p><strong>S&B Agency</strong></p>
+    <p>Geschäftsführung: Sofia & Bombenleger</p>
+    <p>Österreich</p>
+
+    <p>
+      Telefon: +43 681 20245992<br>
+      E-Mail: <a href="mailto:agencys.p18@gmail.com">agencys.p18@gmail.com</a>
+    </p>
+
+    <p style="font-size:14px; color:#94a3b8;">
+      Kontaktaufnahme bitte ausschließlich über WhatsApp oder E-Mail.
+    </p>
+
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("menu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+</script>
+
+<script>
+  function scrollToZeiten() {
+    toggleMenu(); // Menü schließen
+
+    const target = document.getElementById("zeiten");
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }l
+</script>
+
+</body>
+</html>

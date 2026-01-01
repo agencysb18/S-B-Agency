@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S&B Agency – Merch Shop</title>
+  <style>.popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2,6,23,.85);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: #0b1220;
+  border: 1px solid rgba(212,175,55,.4);
+  border-radius: 18px;
+  padding: 28px;
+  max-width: 520px;
+  width: 90%;
+  color: #e5e7eb;
+  position: relative;
+}
+
+.popup-content h2 {
+  margin-top: 0;
+  color: #f5d76e;
+}
+
+.close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+    :root {
+      --bg: #020617;
+      --surface: #0b1220;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --accent: #d4af37;
+      --accent2: #f5d76e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      background: rgba(2,6,23,.8);
+      border-bottom: 1px solid rgba(148,163,184,.12);
+    }
+    nav a { color: var(--text); text-decoration: none; margin-left: 18px; font-weight: 500; }
+    .logo { font-weight: 800; letter-spacing: .5px; }
+
+    header {
+      text-align: center;
+      padding: 80px 24px 40px;
+    }
+    header h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      margin-bottom: 16px;
+    }
+    header p { color: var(--muted); }
+
+    .shop {
+      max-width: 1100px;
+      margin: 0 auto 80px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .product {
+      background: var(--surface);
+      border: 1px solid rgba(148,163,184,.15);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      border-radius: 14px;
+      margin-bottom: 14px;
+    }
+    .product h3 { margin: 10px 0 6px; }
+    .product p { color: var(--muted); font-size: 14px; }
+    .price {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 12px 0;
+      color: var(--accent2);
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #020617;
+      font-weight: 600;
+      text-decoration: none;
+      opacity: .6;
+      cursor: not-allowed;
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--muted);
+      border-top: 1px solid rgba(148,163,184,.12);
+    }
+/* CTA */
+.cta {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 60px 24px;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(212,175,55,.2), rgba(245,215,110,.08));
+  border-radius: 26px;
+}
+
+.cta-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 14px 30px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #d4af37, #f5d76e);
+  color: #020617;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Info Boxen */
+.shop-info {
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.info-box {
+  background: #0b1220;
+  border: 1px solid rgba(212,175,55,.3);
+  border-radius: 18px;
+  padding: 22px;
+}
+
+/* FAQ nebeneinander */
+.faq {
+  max-width: 1100px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.faq-item {
+  background: #0b1220;
+  border: 1px solid rgba(148,163,184,.15);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+  background: rgba(2,6,23,.9);
+  border-bottom:1px solid rgba(148,163,184,.12);
+}
+
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.nav-left img{
+  height:36px;
+}
+
+.logo-text{
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.burger{
+  font-size:30px;
+  cursor:pointer;
+}
+
+/* Hamburger Menü */
+.menu{
+  display:none;
+  position:fixed;
+  top:70px;
+  right:20px;
+  background:#0b1220;
+  border:1px solid rgba(212,175,55,.4);
+  border-radius:14px;
+  padding:14px;
+  z-index:9999;
+}
+
+.menu a{
+  display:block;
+  padding:10px;
+  color:#e5e7eb;
+  text-decoration:none;
+}
+
+.menu a:hover{
+  color:#f5d76e;
+}
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <!-- LINKS: LOGO + NAME -->
+  <div class="nav-left">
+    <img src="logo.png" alt="S&B Agency Logo">
+    <span class="logo-text">S&B AGENCY</span>
+  </div>
+
+  <!-- RECHTS: HAMBURGER -->
+  <div class="burger" onclick="toggleMenu()">☰</div>
+</nav>
+<div id="menu" class="menu">
+  <a href="index.html" onclick="toggleMenu()">Startseite</a>
+  <a href="javascript:void(0)" onclick="openImpressum()">Impressum</a>
+  <a href="javascript:void(0)" onclick="openDatenschutz()">Datenschutz</a>
+</div>
+
+<header>
+ <h1 style="color:#f5d76e;">𝑺&𝑩 𝑨𝑮𝑬𝑵𝑪𝒀 𝑴𝑬𝑹𝑪𝑯</h1>
+  <p><strong>Zur Zeit gibt es noch keinen Merch‑Shop – dieser wird aber bald verfügbar sein.</strong></p>
+  <p>Exklusiver Merch für unsere Community</p>
+</header>
+
+<section class="shop">
+  <div style="grid-column:1 / -1; background:#0b1220; border:1px solid rgba(212,175,55,.3); border-radius:16px; padding:20px; margin-bottom:10px;">
+    <strong>Zahlungsmethode:</strong><br>
+    Aktuell ist ausschließlich <strong>Vorauszahlung per Überweisung</strong> möglich.
+    Weitere Zahlungsmethoden folgen mit dem offiziellen Start des Merch-Shops.
+  </div>
+ 
+</section>
+<section class="cta">
+  <h2>Merch-Updates nicht verpassen</h2>
+  <p>Folge uns auf TikTok und erfahre als Erster, wann der Merch verfügbar ist.</p>
+
+  <a href="https://www.tiktok.com/@spagency1" target="_blank" class="cta-btn">
+    Zu TikTok @spagency1
+  </a>
+</section>
+<section class="shop-info">
+  <h2 style="color:#f5d76e;">𝑷𝒓𝒐𝒅𝒖𝒌𝒕- & 𝑺𝒉𝒐𝒑-𝑰𝒏𝒇𝒐𝒓𝒎𝒂𝒕𝒊𝒐𝒏𝒆𝒏</h2> 
+
+  <div class="info-grid">
+    <div class="info-box">
+      <h2 style="color:#f5d76e;">𝑴𝒂𝒕𝒆𝒓𝒊𝒂𝒍 & 𝑸𝒖𝒂𝒍𝒊𝒕𝒂̈𝒕</h2>
+      <p>Hochwertige Materialien & moderner Schnitt. Details folgen.</p>
+    </div>
+
+    <div class="info-box">
+      <h2 style="color:#f5d76e;">𝑽𝒆𝒓𝒔𝒂𝒏𝒅</h2>
+      <p>Österreich & Deutschland. Infos folgen zum Launch.</p>
+    </div>
+
+    <div class="info-box">
+      <h2 style="color:#f5d76e;">𝑹𝒖̈𝒄𝒌𝒈𝒂𝒃𝒆</h2>
+      <p>Rückgabe- & Umtauschbedingungen folgen.</p>
+    </div>
+  </div>
+</section>
+<section class="faq">
+  <h2 style="color:#f5d76e;">𝑯𝒂̈𝒖𝒇𝒊𝒈𝒆 𝑭𝒓𝒂𝒈𝒆𝒏</h2>
+
+  <div class="faq-grid">
+    <div class="faq-item">
+      <strong>Wann kommt der Merch?</strong>
+      <p>Der Merch-Release ist aktuell in Planung.</p>
+    </div>
+
+    <div class="faq-item">
+      <strong>Welche Größen gibt es?</strong>
+      <p>Geplant sind Größen von S bis XL.</p>
+    </div>
+
+    <div class="faq-item">
+      <strong>Wie kann ich bezahlen?</strong>
+      <p>Zum Start per Vorauszahlung.</p>
+    </div>
+
+    <div class="faq-item">
+      <strong>Wird international versendet?</strong>
+      <p>Zum Start AT & DE.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> S&B Agency · Merch Shop
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script>
+  function openImpressum() {
+    document.getElementById("impressumPopup").style.display = "flex";
+  }
+
+  function closeImpressum() {
+    document.getElementById("impressumPopup").style.display = "none";
+  }
+
+  function openDatenschutz() {
+    document.getElementById("datenschutzPopup").style.display = "flex";
+  }
+
+  function closeDatenschutz() {
+    document.getElementById("datenschutzPopup").style.display = "none";
+  }
+</script>
+
+</body>
+<!-- IMPRESSUM POPUP -->
+<div id="impressumPopup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closeImpressum()">×</span>
+    <h2>Impressum</h2>
+
+    <p><strong>S&B Agency</strong></p>
+    <p>Geschäftsführung: Sofia & Bombenleger</p>
+    <p>Österreich</p>
+
+    <p>
+      Telefon: +43 681 20245992<br>
+      E-Mail: <a href="mailto:agencys.p18@gmail.com">agencys.p18@gmail.com</a>
+    </p>
+
+    <p style="font-size:14px; color:#94a3b8;">
+      Kontaktaufnahme bitte ausschließlich über WhatsApp oder E-Mail.
+    </p>
+  </div>
+</div>
+
+<!-- DATENSCHUTZ POPUP -->
+<div id="datenschutzPopup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closeDatenschutz()">×</span>
+    <h2>Datenschutzerklärung</h2>
+ <p style="font-size:14px; color:#94a3b8;">
+      Der Schutz Ihrer persönlichen Daten ist uns wichtig.
+      Wir verarbeiten personenbezogene Daten ausschließlich gemäß DSGVO.
+    </p>
+
+    <p style="font-size:14px; color:#94a3b8;">
+      Bei Kontaktaufnahme per E-Mail oder WhatsApp werden Ihre Angaben nur zur
+      Bearbeitung Ihrer Anfrage verwendet und nicht weitergegeben.
+    </p>
+
+    <p style="font-size:14px; color:#94a3b8;">
+      Sie haben jederzeit das Recht auf Auskunft, Berichtigung oder Löschung Ihrer Daten.
+    </p>
+
+    <p style="font-size:14px;">
+      Kontakt: <a href="mailto:agencys.p18@gmail.com">agencys.p18@gmail.com</a>
+    </p>
+  </div>
+  
+</div>
+<script>
+function toggleMenu(){
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</html>
